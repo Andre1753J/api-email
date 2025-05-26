@@ -1,47 +1,11 @@
-import  express  from "express";
+import { Server } from "socket.io";
+import express from "express";
+import http from "http";
+import setupSocket from "./socket.js";
 
 const app = express();
+const server = http.createServer(app);
 
-import nodemailer from "nodemailer";
+setupSocket(server); // Inicia WebSockets
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        type: 'OAuth2',
-        clientId: process.env.CLIENTID,
-        clientSecret: process.env.CLIENTSECRET,
-        refreshToken: process.env.REFRESHTOKEN,
-        user: 'mandaemeil222@gmail.com',
-        pass: '25252525Bb'
-    }
-});
-
-
-
-app.get('/enviarEmail', (req , res)=>{
-    const destino = req.query.destino;
-    let conteudo = req.query.conteudo;
-    let mailOptions = {
-        from: 'mandaemeil222@gmail.com',
-        to: destino,
-        subject: 'Assunto do Email',
-        text: conteudo+'isso é só uma api que um estudante ta testado',
-        html: '<b>Corpo do email em HTML</b>'
-    };
- 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error)
-            return res.send(error);
-  
-        }
-         return res.send('Email enviado: ' + info.response);
-    });
-    
-});
-
-
-
-app.listen(8080,()=>{
-    console.log('servidor iniciado na porta 8080');
-});
+server.listen(9000, () => console.log("Servidor rodando na porta 9000"));
