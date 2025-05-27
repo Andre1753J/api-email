@@ -7,4 +7,4 @@ const server = http.createServer(app);
 
 setupSocket(server); // Inicia WebSockets
 
-server.listen(9000, () => console.log("Servidor rodando na porta 9000"));
+server.listen(8080, () => console.log("Servidor rodando na porta 8080"));

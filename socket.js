@@ -23,23 +23,26 @@ export default function setupSocket(server) {
 
 
         socket.on("disconnect", () => { console.log("cliente off") })
-        /* 
+         
         
         socket.on("enviarEmail", async (data) => {
-            const { destino, conteudo } = data;
- 
-            let transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    type: "OAuth2",
-                    clientId: process.env.CLIENTID,
-                    clientSecret: process.env.CLIENTSECRET,
-                    refreshToken: process.env.REFRESHTOKEN,
+            try{
+
+                console.log(data)
+                const { destino, conteudo } = data;
+                
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        type: "OAuth2",
+                        clientId: process.env.CLIENTID,
+                        clientSecret: process.env.CLIENTSECRET,
+                        refreshToken: process.env.REFRESHTOKEN,
                     user: "mandaemeil222@gmail.com",
                     pass: "25252525Bb"
                 }
             });
- 
+            
             let mailOptions = {
                 from: "mandaemeil222@gmail.com",
                 to: destino,
@@ -55,10 +58,10 @@ export default function setupSocket(server) {
                 console.error(error);
                 socket.emit("emailStatus", `Erro ao enviar email: ${error.message}`);
             }
+        }catch{
+            socket.emit("emailStatus", `Erro ao enviar email: ${error.message}`);
+        }
          });
- 
-         socket.on("disconnect", () => console.log("Cliente desconectado"));
-         */
     });
 
 
