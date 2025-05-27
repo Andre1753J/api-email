@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default function setupSocket(server) {
-    console.log("entrou no criar o server");
     
     const io = new Server(server, {
         cors: {
@@ -14,14 +13,15 @@ export default function setupSocket(server) {
         }
     });
 
-    console.log("criou o server")
-
     io.on("connection", (socket) => {
         console.log("Cliente conectado");
 
         socket.on("teste", async (data) => {
-            socket.emit({ message: "foi" })
+            console.log("OOOOOOPAAAAAAAAAAAAAA")
+            socket.emit("argumento",{ message: data })
         })
+
+
         socket.on("disconnect", () => { console.log("cliente off") })
         /* 
         
